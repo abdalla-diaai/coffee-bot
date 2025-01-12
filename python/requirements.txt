@@ -3,3 +3,4 @@ python-dotenv==1.0.1
 openai==1.50.2
 scikit-learn==1.5.2
 numpy==1.26.4
+mlxtend==0.23.1
