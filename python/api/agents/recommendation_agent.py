@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import pandas as pd
 from openai import OpenAI
 import os
-from .utils import get_chatbot_response
+from .utils import get_chatbot_response, check_json_output
 
 load_dotenv()
 
@@ -99,7 +99,14 @@ class RecommendationAgent:
         input_messages = [{'role': 'system', 'content': system_prompt}] + messages[-3:]
 
         chatbot_output = get_chatbot_response(self.client, self.model_name, input_messages)
-        output = self.postprocess_classification(chatbot_output)
+        chatbot_output = check_json_output(self.client, self.model_name, chatbot_output)
+        if chatbot_output.strip():
+            output = self.postprocess_classification(chatbot_output)
+        else:
+            output = {
+                'recommendation_type': '',
+                'parameters': []
+            }
 
         return output
     
@@ -185,7 +192,7 @@ class RecommendationAgent:
         output = {
             'role': 'assistant',
             'content': output,
-            'memory': {'agent':'recommendation_agent'}
+            'memory': {'agent':'Recommendation'}
         }
         return output
 

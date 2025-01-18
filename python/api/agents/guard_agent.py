@@ -41,7 +41,7 @@ class GuardAgent():
             
             }
         """
-        input_messages = [{"role": "system", "content": system_prompt}] + messages[-3:]
+        input_messages = [{'role': 'system', 'content': system_prompt}] + messages[-3:]
         chatbot_output = get_chatbot_response(self.client, self.model_name, input_messages)
         output = self.postprocess(chatbot_output)
         return output
@@ -49,11 +49,11 @@ class GuardAgent():
     def postprocess(self, output):
         output = json.loads(output)
         dict_ouput = {
-            "role": "assistant",
-            "content": output["message"],
-            "memory": {
-                "agent": "guard_agent",
-                "guard_decision": output["decision"]
+            'role': 'Assistant',
+            'content': output['message'],
+            'memory': {
+                'agent': 'Guard',
+                'guard_decision': output['decision']
             }
         }
         return dict_ouput
