@@ -48,13 +48,5 @@ def main():
         response = agent.get_response(messages)
         messages.append(response)
 
-    # recommendation_agent = RecommendationAgent(
-    #     "recommendation_dataset/apriori_recommendations.json",
-    #     "recommendation_dataset/popularity_recommendation.csv",
-    # )
-
-    # print(recommendation_agent.get_apriori_recommendation(products=["Latte"]))
-
-
 if __name__ == "__main__":
     main()
