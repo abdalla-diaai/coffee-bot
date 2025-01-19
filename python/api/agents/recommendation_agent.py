@@ -124,8 +124,7 @@ class RecommendationAgent:
         products = []
         for product in order:
             products.append(product['item'])
-        
-        recommendations = self.apriori_recommendations(products = products)
+        recommendations = self.get_apriori_recommendation(products = products)
         recommendations_str = ", ".join(recommendations)
         system_prompt = f"""
         You are a helpful AI assistant for a coffee shop application which serves drinks and pastries.
@@ -162,7 +161,7 @@ class RecommendationAgent:
             recommendations = self.get_popular_recommendation(recommendation_classification['parameters'])
         
         if recommendations == []:
-            return {"role": "assistant", "content":"Sorry, I can't help with that. Can I help you with your order?"}
+            return {'role': 'assistant', 'content': 'Sorry, I can\'t help with that. Can I help you with your order?'}
         
         # Respond to User
         recommendations_str = ", ".join(recommendations)

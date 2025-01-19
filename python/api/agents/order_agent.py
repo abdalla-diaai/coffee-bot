@@ -7,13 +7,13 @@ from .utils import get_chatbot_response, check_json_output
 
 load_dotenv()
 
-
 class OrderAgent:
-    def __init__(self):
+    def __init__(self, recommendation_agent):
         self.client = OpenAI(
             api_key=os.getenv("RUNPOD_TOKEN"), base_url=os.getenv("RUNPOD_BASE_URL")
         )
         self.model_name = os.getenv("MODEL_NAME")
+        self.recommendation_agent = recommendation_agent
 
     def get_response(self, messages):
         messages = deepcopy(messages)
@@ -75,8 +75,47 @@ class OrderAgent:
             """
         
         last_order_taken_status = ""
+        asked_for_recommendation = False
         for i in range(len(messages) - 1, 0, -1):
             message = messages[i]
             agent_name = message.get("memory", {}).get("agent", "")
             if message['role'] == "assistant" and agent_name == "order_agent":
                 step_number = message['memory']['step number']
+                order = message['memory']['order']
+                asked_for_recommendation = message['memory']['asked_for_recommendation']
+                last_order_taken_status = f"""
+                    step number = {step_number}
+                    order = {order}
+                """
+
+        messages[-1]['content'] = last_order_taken_status + "\n" + messages[-1]['content']
+        input_messages = [{'role': 'system', 'content': system_prompt}] + messages
+        chatbot_response = get_chatbot_response(self.client, self.model_name, input_messages)
+        chatbot_response = check_json_output(self.client, self.model_name, chatbot_response)
+
+        output = self.postprocess(chatbot_response, messages, asked_for_recommendation)
+        return output
+    
+    def postprocess(self, output, messages, asked_for_recommendation):
+        output = json.loads(output)
+        if type(output['order']) == str:
+            output['order'] = json.loads(output['order'])
+        response = output['response']
+        print(asked_for_recommendation)
+        if not asked_for_recommendation and len(output['order']) > 0:
+            recommendation_output = self.recommendation_agent.get_recommendation_from_order(messages, output['order'])
+            response = recommendation_output['content']
+            asked_for_recommendation = True
+
+        dict_output = {
+            'role': 'assistant',
+            'content': response,
+            'memory': {
+                'agent': 'Orders',
+                'asked_for_recommendation': asked_for_recommendation,
+                'step number': output['step number'],
+                'order': output['order']
+            }
+        }
+
+        return dict_output

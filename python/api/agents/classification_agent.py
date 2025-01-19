@@ -45,7 +45,7 @@ class ClassificationAgent():
         output = json.loads(output)
         dict_ouput = {
             'role': 'assistant',
-            'content': output['message'],
+            'content': output,
             'memory': {
                 'agent': 'classification_agent',
                 'classification_decision': output['decision']
