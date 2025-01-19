@@ -66,10 +66,10 @@ class OrderAgent:
             Produce the following output without any additions, not a single letter outside of the structure bellow.
             Your output should be in a structured json format like so. Each key is a string and each value is a string. Make sure to follow the format exactly:
             {
-            "chain of thought": Write down your critical thinking about what is the maximum task number the user is on write now. Then write down your critical thinking about the user input and it's relation to the coffee shop process. Then write down your thinking about how you should respond in the response parameter taking into consideration the Things to NOT DO section. and Focus on the things that you should not do. 
-            "step number": determine which task you are on based on the conversation.
-            "order": this is going to be a list of jsons like so. [{"item": put the item name, "quanitity": put the number that the user wants from this item, "price": put the total price of the item }]
-            "response": write the a response to the user
+            "chain of thought": "Write down your critical thinking about what is the maximum task number the user is on write now. Then write down your critical thinking about the user input and it's relation to the coffee shop process. Then write down your thinking about how you should respond in the response parameter taking into consideration the Things to NOT DO section. and Focus on the things that you should not do. 
+            "step number": determine which task you are on based on the conversation."
+            "order": "This is going to be a list of jsons like so. [{"item": "Put the item name", "quanitity": "Put the number that the user wants from this item.", "price": "Put the total price of the item }]
+            "response": "Write the a response to the user"
             }
             
             """
@@ -83,6 +83,7 @@ class OrderAgent:
                 step_number = message['memory']['step number']
                 order = message['memory']['order']
                 asked_for_recommendation = message['memory']['asked_for_recommendation']
+                print(asked_for_recommendation)
                 last_order_taken_status = f"""
                     step number = {step_number}
                     order = {order}
@@ -92,7 +93,6 @@ class OrderAgent:
         input_messages = [{'role': 'system', 'content': system_prompt}] + messages
         chatbot_response = get_chatbot_response(self.client, self.model_name, input_messages)
         chatbot_response = check_json_output(self.client, self.model_name, chatbot_response)
-
         output = self.postprocess(chatbot_response, messages, asked_for_recommendation)
         return output
     
@@ -106,14 +106,15 @@ class OrderAgent:
             recommendation_output = self.recommendation_agent.get_recommendation_from_order(messages, output['order'])
             response = recommendation_output['content']
             asked_for_recommendation = True
-
+        else:
+            response = output['content']
         dict_output = {
             'role': 'assistant',
             'content': response,
             'memory': {
                 'agent': 'Orders',
                 'asked_for_recommendation': asked_for_recommendation,
-                'step number': output['step number'],
+                'step number': output.get('step number', 1),
                 'order': output['order']
             }
         }

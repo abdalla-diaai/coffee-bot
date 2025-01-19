@@ -1,0 +1,6 @@
+{"input": {
+    "messages": [{
+        "role": "user",
+        "content": "I would like to order a Latte, please."
+    }]
+}}
