@@ -76,7 +76,20 @@ export default function Home() {
                         <View
                             className="w-[48%] mt-2"
                         >
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                            onPress={() => router.push(
+                                { pathname: "/details",
+                                params: {
+                                    name: item.name,
+                                    description: item.description,
+                                    price: item.price,
+                                    image_url: item.image_url,
+                                    type: item.category,
+                                    rating: item.rating,
+                                }
+                            }
+                            )}
+                            >
 
                                 <Image
                                     source={{ uri: item.image_url }}
