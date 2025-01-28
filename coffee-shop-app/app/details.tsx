@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { View, Text  } from "react-native";
-import { Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import PageHeader from "@/components/PageHeader";
 
 const DetailsPage = () => {
@@ -16,9 +16,9 @@ const DetailsPage = () => {
 
     return (
         <GestureHandlerRootView>
-            <PageHeader title={name} showHeaderRight={true} bgColor={"#F9F9F9"} />
+            <PageHeader title={"Details"} showHeaderRight={true} bgColor={"#F9F9F9"} />
             <Text>
-                details page
+                details page {name}
             </Text>
 
         </GestureHandlerRootView>
