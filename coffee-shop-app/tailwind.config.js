@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         app_orange_color: "#C67C4E",
         search_bar_color: "#F3F4F6",
+        text_color: "#A2A2A2"
     },
   },
   plugins: [],

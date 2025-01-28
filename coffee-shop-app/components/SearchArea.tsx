@@ -8,7 +8,7 @@ export default function SearchArea () {
     <View
     className='w-full items-center bg-[#222222] pb-6'>
     <View className='flex w-[90%] pt-8'>
-    <Text className='text-[#A2A2A2] text-sm font-[Sora-Regular]'>
+    <Text className='text-[text-color] text-sm font-[Sora-Regular]'>
         Location
     </Text>
     <Text className='text-white text font-[Sora-Regular]'>

@@ -111,7 +111,7 @@ export default function Home() {
                                 >{item.name}
                                 </Text>
                                 <Text
-                                    className="text-[#A2A2A2] text-sm font-[Sora-Regular] ml-1 mt-1"
+                                    className="text-[text-color] text-sm font-[Sora-Regular] ml-1 mt-1"
                                 >{item.category}
                                 </Text>
                             </TouchableOpacity>
