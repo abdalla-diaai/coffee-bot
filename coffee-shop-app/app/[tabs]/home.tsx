@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Product, ProductCategory } from "@/types/types";
 import { fetchProducts } from "@/services/productService";
-import { Text, View, SafeAreaView, Image, TouchableOpacity, FlatList } from "react-native";
+import { Text, View, SafeAreaView, Image, TouchableOpacity, FlatList, StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -11,30 +11,48 @@ import Banner from "@/components/Banner";
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [shownProducts, setShownProducts] = useState<Product[]>([]);
     const [productCategories, setProductCatgories] = useState<ProductCategory[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<string>("All");
-    useEffect(() => {
-        const loadProducts = async () => {
-            try {
-                const products = await fetchProducts();
-                const categories = products.map((product) => product.category);
-                categories.unshift("All");
-                const uniqueCategories = Array.from(new Set(categories)).map((category) => ({
-                    id: category,
-                    selected: selectedCategory === category,
-                }));
-                setProducts(products);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            };
+    const [selectedCategory, setSelectedCategory] = useState<string>('All');
+    const [loading, setLoading] = useState<boolean>(true);
+    const loadProducts = async () => {
+        try {
+            const products = await fetchProducts();
+            const categories = products.map((product) => product.category);
+
+            categories.unshift("All");
+            const uniqueCategories = Array.from(new Set(categories)).map((category) => ({
+                id: category,
+                selected: selectedCategory === category,
+            }));
+            setProducts(products);
+            setShownProducts(products);
+            setProductCatgories(uniqueCategories);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
         };
+    };
+    useEffect(() => {
         loadProducts();
-
     }, []);
-
+    useEffect(() => {
+        const uniqueCategories = Array.from((productCategories)).map((category) => ({
+          id: category.id,
+          selected: selectedCategory === category.id,
+        }));
+        setProductCatgories(uniqueCategories);
+    
+        if (selectedCategory === 'All') {
+          setShownProducts(products);
+        } else {
+          const filteredProducts = products.filter((product) => product.category === selectedCategory);
+          setShownProducts(filteredProducts);
+        }
+    
+      }, [selectedCategory]);
+    
     if (loading) {
         return (
             <View>
@@ -45,13 +63,15 @@ export default function Home() {
 
     return (
         <GestureHandlerRootView>
+            <StatusBar barStyle="light-content" backgroundColor="#222222" />
+
             <SafeAreaView className="w-full h-full">
                 <FlatList
                     horizontal={false}
                     columnWrapperStyle={{ justifyContent: "space-between", marginLeft: 15, marginRight: 15 }}
                     numColumns={2}
                     keyExtractor={(item, index) => index.toString()}
-                    data={products}
+                    data={shownProducts}
                     renderItem={({ item }) => (
                         <View
                             className="w-[48%] mt-2"
@@ -88,15 +108,35 @@ export default function Home() {
                         <View className="flex">
                             <SearchArea />
                             <Banner />
+                            <View
+                                className='flex items-center'
+                            >
+                                <FlatList 
+                className='mt-6 w-[90%] mb-2'
+                data = {productCategories}
+                horizontal={true}
+                renderItem={({item}) => (
+                  <TouchableOpacity
+                    onPress={() => setSelectedCategory(item.id)}
+                  >
+                    <Text
+                      className={`text-sm mr-4 font-[Sora-Regular] p-3 rounded-lg 
+                        ${item.selected ? 'text-white' : 'text-[#313131]'}
+                        ${item.selected ? 'bg-app_orange_color ' : 'bg-[#EDEDED] '}
+                        `}
+                      >{item.id}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+                            </View>
                         </View>
 
                     )}
 
                 />
-                <Text>Home</Text>
-
             </SafeAreaView>
-            </GestureHandlerRootView>
+        </GestureHandlerRootView>
     );
 };
 
