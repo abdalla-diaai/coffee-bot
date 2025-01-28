@@ -30,3 +30,9 @@ export interface CartContextType {
     setQuantity: (itemKey: string, delta: number) => void;
     clearCart: () => void;
 };
+
+export interface HeaderProps {
+    title: string;
+    showHeaderRight: boolean;
+    bgColor: string;
+};

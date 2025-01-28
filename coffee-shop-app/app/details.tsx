@@ -1,5 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { View, Text  } from "react-native";
+import { Gesture, GestureHandlerRootView } from "react-native-gesture-handler";
+import PageHeader from "@/components/PageHeader";
 
 const DetailsPage = () => {
 
@@ -13,12 +15,13 @@ const DetailsPage = () => {
     };
 
     return (
-        <View>
+        <GestureHandlerRootView>
+            <PageHeader title={name} showHeaderRight={true} bgColor={"#F9F9F9"} />
             <Text>
                 details page
             </Text>
 
-        </View>
+        </GestureHandlerRootView>
     );
 }
 

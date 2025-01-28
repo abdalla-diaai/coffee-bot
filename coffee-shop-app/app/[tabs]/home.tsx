@@ -8,6 +8,7 @@ import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchArea from "@/components/SearchArea";
 import Banner from "@/components/Banner";
+import Toast from 'react-native-root-toast';
 
 export default function Home() {
     const {addToCart} = useCart();
@@ -65,6 +66,10 @@ export default function Home() {
     // add to cart
     const addItem = (name: string) => {
         addToCart(name, 1);
+        Toast.show(`${name} added to cart`, {
+            duration: Toast.durations.SHORT,
+            
+        })
     };
 
     return (

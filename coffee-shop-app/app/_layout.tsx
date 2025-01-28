@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 // Import your global CSS file
 import "../global.css";
@@ -15,11 +16,13 @@ export default function RootLayout() {
   })
   return (
     <CartProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="details" options={{ headerShown: true }} />
-        <Stack.Screen name="[tabs]" options={{ headerShown: false }} />
-      </ Stack>
+      <RootSiblingParent>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="details" options={{ headerShown: true }} />
+          <Stack.Screen name="[tabs]" options={{ headerShown: false }} />
+        </ Stack>
+      </RootSiblingParent>
     </CartProvider>
 
   );
