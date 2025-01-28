@@ -19,3 +19,20 @@ export interface MessageInterface {
     content: string;
     memory?: any;
 };
+
+export type CartItems = {
+    [key: string]: number,
+}
+
+export interface CartContextType {
+    cartItems: CartItems;
+    addToCart: (itemKey: string, quantity: number) => void;
+    setQuantity: (itemKey: string, delta: number) => void;
+    clearCart: () => void;
+};
+
+export interface HeaderProps {
+    title: string;
+    showHeaderRight: boolean;
+    bgColor: string;
+};

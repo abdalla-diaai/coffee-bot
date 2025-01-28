@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 import { Product, ProductCategory } from "@/types/types";
 import { fetchProducts } from "@/services/productService";
 import { Text, View, SafeAreaView, Image, TouchableOpacity, FlatList, StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
-import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SearchArea from "@/components/SearchArea";
 import Banner from "@/components/Banner";
+import Toast from 'react-native-root-toast';
 
 export default function Home() {
+    const {addToCart} = useCart();
     const [products, setProducts] = useState<Product[]>([]);
     const [shownProducts, setShownProducts] = useState<Product[]>([]);
     const [productCategories, setProductCatgories] = useState<ProductCategory[]>([]);
@@ -59,7 +61,16 @@ export default function Home() {
                 <Text>Loading...</Text>
             </View>
         );
-    }
+    };
+
+    // add to cart
+    const addItem = (name: string) => {
+        addToCart(name, 1);
+        Toast.show(`${name} added to cart`, {
+            duration: Toast.durations.SHORT,
+            
+        })
+    };
 
     return (
         <GestureHandlerRootView>
@@ -76,7 +87,20 @@ export default function Home() {
                         <View
                             className="w-[48%] mt-2"
                         >
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                            onPress={() => router.push(
+                                { pathname: "/details",
+                                params: {
+                                    name: item.name,
+                                    description: item.description,
+                                    price: item.price,
+                                    image_url: item.image_url,
+                                    type: item.category,
+                                    rating: item.rating,
+                                }
+                            }
+                            )}
+                            >
 
                                 <Image
                                     source={{ uri: item.image_url }}
@@ -93,7 +117,7 @@ export default function Home() {
                             </TouchableOpacity>
                             <View className="flex-row justify-between ml-1 mt-4 mb-2">
                                 <Text className="text-[#050505] text-xl font-[Sora-SemiBold]">${item.price}</Text>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={() => addItem(item.name)}>
                                     <View className="mr-2 p-2 -mt-1 bg-app_orange_color rounded-xl">
                                         <AntDesign name="plus" size={20} color="white" />
 
