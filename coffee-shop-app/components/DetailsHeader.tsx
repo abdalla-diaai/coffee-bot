@@ -18,7 +18,7 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({
             <View>
                 <Text className="text-2xl text-[#242424] font-[Sora-SemiBold] ml-1 mt-4">{name}</Text>
                 <View className="flex-row w-full justify-between">
-                    <Text className="text[#A2A2A2 text-sm font-[Sora-Regular] ml-1 mt-1 mb-5">{type}</Text>
+                    <Text className="text[text-color text-sm font-[Sora-Regular] ml-1 mt-1 mb-5">{type}</Text>
                     <View className="flex-row mt-2">
                         <View className="bg-[#F5F5F5] p-2 rounded-xl mr-2">
                             <MaterialIcons

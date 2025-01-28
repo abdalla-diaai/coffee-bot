@@ -13,7 +13,7 @@ export default function Index() {
             <Text className="text-white text-3xl text-center font-[Sora-SemiBold]">
               Fall in Love with Coffee in a Blissful Delight!</Text>
             <Text
-              className="pt-3 text-[#A2A2A2] text-center font-[Sora-Regular]"
+              className="pt-3 text-[text-color] text-center font-[Sora-Regular]"
             >
               Welcome to our cozy coffee corner, where every cup is a delightful for you.
             </Text>

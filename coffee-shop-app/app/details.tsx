@@ -51,7 +51,7 @@ const DetailsPage = () => {
                 >
                     <View>
                         <Text
-                            className="text-[#A2A2A2] text-base font-[Sora-Regular] pb-3"
+                            className="text-[text-color] text-base font-[Sora-Regular] pb-3"
                         >Price
                         </Text>
                         <Text
