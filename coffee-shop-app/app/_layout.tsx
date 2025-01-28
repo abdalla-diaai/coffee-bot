@@ -7,9 +7,9 @@ import "../global.css";
 
 export default function RootLayout() {
   const [fontLoaded] = useFonts({
-    "Sora-Regular": require("../assets/fonts/Sora-Regular.ttf"),
-    "Sora-SemiBold": require("../assets/fonts/Sora-SemiBold.ttf"),
-    "Sora-Bold": require("../assets/fonts/Sora-Bold.ttf"),
+    "Sora-Regular": require("@/assets/fonts/Sora-Regular.ttf"),
+    "Sora-SemiBold": require("@/assets/fonts/Sora-SemiBold.ttf"),
+    "Sora-Bold": require("@/assets/fonts/Sora-Bold.ttf"),
 
   })
   return (
