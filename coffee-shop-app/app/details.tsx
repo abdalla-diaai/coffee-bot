@@ -4,6 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import PageHeader from "@/components/PageHeader";
 import DetailsHeader from "@/components/DetailsHeader";
 import DescriptionSection from "@/components/DescriptionSection";
+import SizeSection from "@/components/SizeSection";
 
 const DetailsPage = () => {
 
@@ -29,6 +30,7 @@ const DetailsPage = () => {
                             rating={rating}
                         />
                         <DescriptionSection description={description} />
+                        <SizeSection />
                     </View>
                 </ScrollView>
             </View>
