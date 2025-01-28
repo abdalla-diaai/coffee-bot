@@ -36,3 +36,14 @@ export interface HeaderProps {
     showHeaderRight: boolean;
     bgColor: string;
 };
+
+export interface DetailsHeaderProps {
+    image_url: string;
+    name: string;
+    type: string;
+    rating: string;
+};
+
+export interface DescriptionProps {
+    description: string;
+};
