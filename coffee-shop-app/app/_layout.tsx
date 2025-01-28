@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 
 // Import your global CSS file
 import "../global.css";
+import { CartProvider } from "@/contexts/CartContext";
 
 
 export default function RootLayout() {
@@ -13,10 +14,13 @@ export default function RootLayout() {
 
   })
   return (
-  <Stack>  
-    <Stack.Screen name="index" options={{headerShown: false}} />
-    <Stack.Screen name="details" options={{headerShown: true}} />
-    <Stack.Screen name="[tabs]" options={{headerShown: false}} /> 
-  </ Stack>
-);
+    <CartProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="details" options={{ headerShown: true }} />
+        <Stack.Screen name="[tabs]" options={{ headerShown: false }} />
+      </ Stack>
+    </CartProvider>
+
+  );
 }
