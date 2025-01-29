@@ -1,6 +1,8 @@
 import { Text, View, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { Product, ProductListProps } from '@/types/types';
 import { FlatList } from 'react-native-gesture-handler';
+import OrderHeader from "@/components/OrderHeader";
+import OrdersFooter from "@/components/OrdersFooter";
 
 const CartProductList: React.FC<ProductListProps> = ({ products, quantities, setQuantities, totalPrice }) => {
 
@@ -36,6 +38,8 @@ const CartProductList: React.FC<ProductListProps> = ({ products, quantities, set
                   data={filteredProducts}
                   renderItem={renderItem}
                   keyExtractor={(item, index) => index.toString()}
+                  ListHeaderComponent={<OrderHeader />}
+                  ListFooterComponent={<OrdersFooter totalPrice={totalPrice} />}
               />
           ) : (
               

@@ -7,16 +7,10 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
     const [cartItems, setCartItems] = useState<CartItems>({});
     
     const addToCart = (itemKey: string, quantity: number) => {
-      if (quantity <= 0) {
-        return;
-      };
-      setCartItems((prevItems) => {
-        const existingQuantity = prevItems[itemKey] || 0;
-        return {
-          ...prevItems,
-          [itemKey]: existingQuantity + quantity,
-        };
-      });
+      setCartItems((prevItems) => ({
+        ...prevItems,
+        [itemKey]: (prevItems[itemKey] || 0) + quantity,
+      }));
     };
 
     const setQuantity = (itemKey: string, delta: number) => {
