@@ -54,3 +54,7 @@ export interface ProductListProps {
     setQuantities: (itemKey: string, quantity: number) => void;
     totalPrice: number;
 };
+
+export interface OrdersFooterProps {
+    totalPrice: number;
+};
