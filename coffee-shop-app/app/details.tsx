@@ -12,7 +12,6 @@ import SizeSection from "@/components/SizeSection";
 
 const DetailsPage = () => {
     const { addToCart } = useCart();
-
     const { name, description, price, image_url, type, rating } = useLocalSearchParams() as {
         name: string;
         description: string;

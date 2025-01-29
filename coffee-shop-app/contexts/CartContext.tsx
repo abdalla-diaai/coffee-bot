@@ -1,17 +1,22 @@
 import { CartItems, CartContextType } from "@/types/types";
-import { createContext, useContext } from "react";
-import { useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({children} : {children: React.ReactNode}) => {
+export const CartProvider = ({children} : {children: ReactNode}) => {
     const [cartItems, setCartItems] = useState<CartItems>({});
+    
     const addToCart = (itemKey: string, quantity: number) => {
-        setCartItems((prevCartItems) => {
-            const newCartItems = {...prevCartItems};
-            newCartItems[itemKey] = (newCartItems[itemKey] || 0) + quantity;
-            return newCartItems;
-        });
+      if (quantity <= 0) {
+        return;
+      };
+      setCartItems((prevItems) => {
+        const existingQuantity = prevItems[itemKey] || 0;
+        return {
+          ...prevItems,
+          [itemKey]: existingQuantity + quantity,
+        };
+      });
     };
 
     const setQuantity = (itemKey: string, delta: number) => {

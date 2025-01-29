@@ -21,7 +21,7 @@ export interface MessageInterface {
 };
 
 export type CartItems = {
-    [key: string]: number,
+    [key: string]: number;
 }
 
 export interface CartContextType {
@@ -46,4 +46,11 @@ export interface DetailsHeaderProps {
 
 export interface DescriptionProps {
     description: string;
+};
+
+export interface ProductListProps {
+    products: Product[];
+    quantities: {[key: string]: number};
+    setQuantities: (itemKey: string, quantity: number) => void;
+    totalPrice: number;
 };

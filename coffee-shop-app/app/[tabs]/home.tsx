@@ -11,12 +11,15 @@ import Banner from "@/components/Banner";
 import Toast from 'react-native-root-toast';
 
 export default function Home() {
-    const {addToCart} = useCart();
+    
+    const {addToCart, cartItems} = useCart();
     const [products, setProducts] = useState<Product[]>([]);
     const [shownProducts, setShownProducts] = useState<Product[]>([]);
     const [productCategories, setProductCatgories] = useState<ProductCategory[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [loading, setLoading] = useState<boolean>(true);
+    
+
     const loadProducts = async () => {
         try {
             const products = await fetchProducts();
@@ -36,9 +39,11 @@ export default function Home() {
             setLoading(false);
         };
     };
+
     useEffect(() => {
         loadProducts();
     }, []);
+
     useEffect(() => {
         const uniqueCategories = Array.from((productCategories)).map((category) => ({
           id: category.id,
@@ -65,17 +70,16 @@ export default function Home() {
 
     // add to cart
     const addItem = (name: string) => {
+        console.log("called!");
         addToCart(name, 1);
         Toast.show(`${name} added to cart`, {
             duration: Toast.durations.SHORT,
-            
-        })
+        });
     };
 
     return (
         <GestureHandlerRootView>
             <StatusBar barStyle="light-content" backgroundColor="#222222" />
-
             <SafeAreaView className="w-full h-full">
                 <FlatList
                     horizontal={false}
