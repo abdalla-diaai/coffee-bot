@@ -22,6 +22,8 @@ export default function Order() {
         try {
             const products = await fetchProducts();
             setProducts(products);
+            const total = calculateTotal(products, cartItems);
+            setTotalPrice(total);
         } catch (error) {
             console.error(error);
         } finally {
@@ -41,6 +43,20 @@ export default function Order() {
     useEffect(() => {
         loadProducts();
     }, []);
+
+    const calculateTotal = (products: Product[], quantities: { [key: string]: number }) => {
+
+        return products.reduce((total, product) => {
+            const quantity = quantities[product.name] || 0;
+            return total + product.price * quantity;
+        }, 0);
+    };
+
+    useEffect(() => {
+        const total = calculateTotal(products, cartItems);
+        setTotalPrice(total);
+
+    }, [products, cartItems]);
 
 
     return (

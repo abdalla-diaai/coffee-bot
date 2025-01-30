@@ -1,11 +1,13 @@
-import { Text, View } from 'react-native'
+import { TouchableOpacity, Text, View } from 'react-native'
 import React from 'react'
-import { TouchableOpacity,GestureHandlerRootView } from 'react-native-gesture-handler'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {router} from "expo-router";
+import PageHeader from "@/components/PageHeader";
 
 const ThankyouPage = () => {
   return (
     <GestureHandlerRootView>
+        <PageHeader title={"Thank You"} showHeaderRight={false} bgColor={"#F9F9F9"} />
         <View className='w-full h-full items-center justify-center '>
         <Text className='text-3xl font-[Sora-SemiBold] text-center mx-10'>Thank you For Your Order</Text>
 
