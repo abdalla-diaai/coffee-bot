@@ -13,13 +13,6 @@ export interface ProductCategory {
     selected: boolean;
 };
 
-// Message Interface
-export interface MessageInterface {
-    role: string;
-    content: string;
-    memory?: any;
-};
-
 export type CartItems = {
     [key: string]: number;
 }
@@ -57,4 +50,21 @@ export interface ProductListProps {
 
 export interface OrdersFooterProps {
     totalPrice: number;
+};
+
+// Message Interface
+export interface MessageInterface {
+    role: string;
+    content: string;
+    memory?: any;
+};
+
+export interface MessagesListProps {
+    messages: MessageInterface[];
+    isTyping: boolean;
+};
+
+export interface Message {
+    message: MessageInterface;
+
 };

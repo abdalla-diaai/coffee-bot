@@ -20,7 +20,7 @@ export default function TabsLayout() {
                 />
 
                 <Tabs.Screen
-                    name='chatRoom'
+                    name='chatBot'
                     options={{
                         headerShown: true,
                         tabBarStyle: { display: 'none' },
