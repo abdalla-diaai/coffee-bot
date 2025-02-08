@@ -32,7 +32,6 @@ const MessageItem: React.FC<Message> = ({ message }) => {
                         <Text 
                         style={{fontSize: heightPercentageToDP(1.9)}}
                         >
-                            Thinking. 
                             {message?.content}
                         </Text>
                     </View>

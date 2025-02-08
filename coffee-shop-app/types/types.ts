@@ -54,9 +54,9 @@ export interface OrdersFooterProps {
 
 // Message Interface
 export interface MessageInterface {
-    role: string;
     content: string;
     memory?: any;
+    role: string;
 };
 
 export interface MessagesListProps {
@@ -66,5 +66,4 @@ export interface MessagesListProps {
 
 export interface Message {
     message: MessageInterface;
-
 };
