@@ -1,12 +1,13 @@
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView, Pressable, Keyboard } from "react-native";
 import React, { useRef, useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MessageInterface } from "@/types/types";
-import { heightPercentageToDP as hp, widthPercentageToDP as wb } from 'react-native-responsive-screen';
-import { Feather } from "@expo/vector-icons";
 import MessagesList from "@/components/MessagesList";
 import { callChatBotAPI } from "@/services/chatBot";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Feather } from "@expo/vector-icons";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
 
 const chatBot = () => {
@@ -33,9 +34,8 @@ const chatBot = () => {
             let responseMessage = await callChatBotAPI(inputMessages);
             if (responseMessage) {
                 setMessages([...inputMessages, responseMessage]);
+                setIsTyping(false);
             }
-            setIsTyping(false);
-
 
         } catch (error) {
             console.log(error);
@@ -46,18 +46,16 @@ const chatBot = () => {
         <GestureHandlerRootView>
             <PageHeader title={"Chat Bot"} showHeaderRight={false} bgColor={"#F9F9F9"} />
 
-            <View className="flex-1 justify-between bg-neutral-100 overflow-visible">
-                <View className="flex-1">
-
-                    <MessagesList 
-                    messages={messages}
-                    isTyping={isTyping}
-                    />
-
-
-                </View>
-                <ScrollView automaticallyAdjustKeyboardInsets={true}>
-
+            <SafeAreaView className="flex-1 justify-between bg-neutral-100 overflow-visible">
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === "ios" ? "padding" : undefined}
+                    keyboardVerticalOffset={100}
+                    style={{ flex: 1 }}
+                >
+                    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                        {isTyping}
+                        <MessagesList messages={messages} isTyping={isTyping} />
+                    </ScrollView>
                     <View
                         style={{ marginBottom: hp(2.7) }}
                         className='pt-2'
@@ -75,14 +73,14 @@ const chatBot = () => {
                             <TouchableOpacity
                                 onPress={handleMessage}
                                 className='bg-neutral-200 p-2 mr-[1px] rounded-full'
+                                
                             >
                                 <Feather name="send" size={hp(2.7)} color="#737373" />
                             </TouchableOpacity>
                         </View>
                     </View>
-                </ScrollView>
-
-            </View>
+                </KeyboardAvoidingView>
+            </SafeAreaView>
 
         </GestureHandlerRootView>
     )
