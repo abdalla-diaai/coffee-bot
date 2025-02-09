@@ -19,12 +19,11 @@ export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState<string>('All');
     const [loading, setLoading] = useState<boolean>(true);
     
-
     const loadProducts = async () => {
         try {
             const products = await fetchProducts();
             const categories = products.map((product) => product.category);
-
+            console.log(`products: ${JSON.stringify(products)}`);
             categories.unshift("All");
             const uniqueCategories = Array.from(new Set(categories)).map((category) => ({
                 id: category,
@@ -130,7 +129,6 @@ export default function Home() {
 
                             </View>
                         </View>
-
                     )}
                     ListHeaderComponent={() => (
                         <View className="flex">
@@ -159,9 +157,7 @@ export default function Home() {
               />
                             </View>
                         </View>
-
                     )}
-
                 />
             </SafeAreaView>
         </GestureHandlerRootView>

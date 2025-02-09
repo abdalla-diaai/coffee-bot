@@ -7,6 +7,8 @@ export const CartProvider = ({children} : {children: ReactNode}) => {
     const [cartItems, setCartItems] = useState<CartItems>({});
     
     const addToCart = (itemKey: string, quantity: number) => {
+      console.log(`Adding item: ${itemKey}, Quantity: ${quantity}`);
+      console.log(cartItems);
       setCartItems((prevItems) => ({
         ...prevItems,
         [itemKey]: (prevItems[itemKey] || 0) + quantity,
