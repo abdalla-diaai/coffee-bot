@@ -17,7 +17,7 @@ async function callChatBotAPI(messages: MessageInterface[]): Promise<MessageInte
         const output = response.data;
         console.log('API response data:', output); // Log the response data
 
-        if (output && output.output) {
+        if (output && output.output && output.status === "COMPLETED") {
             let outputMessage: MessageInterface = output.output;
             return outputMessage;
         } else {
@@ -26,8 +26,8 @@ async function callChatBotAPI(messages: MessageInterface[]): Promise<MessageInte
     } catch (error) {
         console.error('Error calling the API:', error);
         throw error;
-    }
-}
+    };
+};
 
 export { callChatBotAPI }; 
 

@@ -5,8 +5,12 @@ import OrderHeader from "@/components/OrderHeader";
 import OrdersFooter from "@/components/OrdersFooter";
 
 const CartProductList: React.FC<ProductListProps> = ({ products, quantities, setQuantities, totalPrice }) => {
-
+  
   const filteredProducts = products.filter((product) => (quantities[product.name] || 0) > 0);
+  console.log(filteredProducts)
+  console.log(`quantities: ${JSON.stringify(quantities)}`);
+  console.log(`products: ${JSON.stringify(products)}`);
+
 
   const renderItem = ({ item }: { item: Product }) => (
     <View className="flex-row items-center justify-between mx-7 pb-3">

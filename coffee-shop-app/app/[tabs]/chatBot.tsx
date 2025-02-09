@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView, Pressable, Keyboard } from "react-native";
+import { View, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import React, { useRef, useState } from "react";
 import PageHeader from "@/components/PageHeader";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -7,7 +7,7 @@ import MessagesList from "@/components/MessagesList";
 import { callChatBotAPI } from "@/services/chatBot";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Feather } from "@expo/vector-icons";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
 
 const chatBot = () => {

@@ -15,7 +15,7 @@ export interface ProductCategory {
 
 export type CartItems = {
     [key: string]: number;
-}
+};
 
 export interface CartContextType {
     cartItems: CartItems;
